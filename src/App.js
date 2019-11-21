@@ -33,14 +33,21 @@ class App extends React.Component {
   };
 
   resultHandler = () => {
-    this.setState(
-      {
-        result: eval(this.state.inputs)
-      },
+    try {
+      this.setState(
+        {
+          result: eval(this.state.inputs)
+        },
+        this.setState({
+          inputs: ""
+        })
+      );
+    } catch (e) {
+      this.reset();
       this.setState({
-        inputs: ""
-      })
-    );
+        result: "Please enter valid inputs"
+      });
+    }
   };
 
   render() {
