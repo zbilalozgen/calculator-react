@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "../src/components/css/bootstrap.css";
+import Buttons from "./components/Buttons";
+import Screen from "./components/Screen";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      inputs: "",
+      result: 0
+    };
+  }
+
+  inputHandler = input => {
+    this.setState(
+      {
+        inputs: [...this.state.inputs].join("").concat(input)
+      },
+      this.setState({
+        result: [...this.state.inputs].join("").concat(input)
+      })
+    );
+  };
+
+  reset = () => {
+    this.setState({
+      inputs: "",
+      result: 0
+    });
+  };
+
+  resultHandler = () => {
+    this.setState(
+      {
+        result: eval(this.state.inputs)
+      },
+      this.setState({
+        inputs: ""
+      })
+    );
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Screen result={this.state.result} />
+        <Buttons
+          reset={this.reset}
+          inputHandler={this.inputHandler}
+          resultHandler={this.resultHandler}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
